@@ -1,0 +1,15 @@
+<h1>Yay!</h1>
+<p>You have a templated page with EJS! There are several things you can do with EJS.</p>
+<p>You can wrap arbitrary javascript code with &lt;% and %&gt;; For example, here's a for loop:</p>
+<ul>
+  <% for (var i=0, len=5; i<len; ++i) { %>
+    <li><%-i%></li>
+  <% } %>
+</ul>
+
+<p>You can also "print" by wrapping variables with &lt;%-variable%&gt; or
+&lt;%=variable%&gt;; the former will simply print your variable, the latter
+will html-escape it. For example:</p>
+<% var str = "<b>Hello, World!</b>"; %>
+<p><%-str%></p>
+<p><%=str%></p>
