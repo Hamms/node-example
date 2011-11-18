@@ -4,11 +4,18 @@
  */
 
 // declare all your system-wide variables here
-var express = require('express');
+var express = require('express')
+  , expressMongoose = require('express-mongoose')
+  , mongoose = require('mongoose');
 
 // this "returns" the app object so other files
 // can access it by calling require('app')
 var app = module.exports = express.createServer();
+
+// DB SHIT
+// there are tons of ways you can do this
+mongoose.connect('mongodb://localhost/badassexample');
+var posts = mongoose.model('Post', require('./schemas/post'));
 
 // Configuration
 
@@ -42,13 +49,26 @@ app.configure(function(){
 
 app.get('/', function(req, res){
   res.render('index', {
-    title: 'Express'
+    title : 'Example',
   });
 });
 
+app.get('/posts', function(req, res){
+  res.render('posts', {
+    title : 'Sweet Posts',
+    posts : posts.top(5), // express-mongoose is what lets us do this
+  })
+})
+
+app.post('/posts', function(req, res){
+  new posts(req.body).save(function(err){
+    res.send((err!==null) ? 'error' : 'success')
+  })
+})
+
 app.get('/:variable', function(req, res){
   res.render('variable', {
-    title: 'Variable Page!',
+    title : 'Variable Page!',
     variable : req.params.variable
   });
 })
@@ -60,4 +80,4 @@ app.get('/:variable', function(req, res){
 // can be replaced by a library like cluster later on
 
 app.listen(8002);
-console.log("Express server listening on port %d in %s mode", app.address().port);
+console.log("Express server listening on port %d", app.address().port);

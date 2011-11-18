@@ -1,0 +1,30 @@
+<h1>Mother Lovin' Posts!</h1>
+<div>
+  <% if (locals.status) { %>
+  <div>
+    <%-status%>
+  </div>
+  <% } %>
+  <div>
+    <form action='/posts' method='POST'>
+      <div>
+        <label for='author'>author:</label>
+        <input id='author' name='author' type='text'>
+      </div>
+      <div>
+        <label for='content'>content:</label>
+        <textarea id='content' name='content'></textarea>
+      </div>
+      <div>
+        <input type='submit'>
+      </div>
+    </form>
+  </div>
+  <div>
+    <% if (locals.posts && locals.posts.length) {
+      %><%- partial('./post', posts) %><%
+    } else {
+      %>No posts yet!<%
+    } %>
+  </div>
+</div>
